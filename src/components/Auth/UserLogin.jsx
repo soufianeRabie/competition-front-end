@@ -39,8 +39,9 @@ export default function UserLogin() {
                    if (status === 200) {
                        setToken(data.token)
                        setAuthenticated(true)
-                       const {role} = data.user
-                       navigate(redirectToDashboard(role));
+                       // const {roles_id} = data.user
+                       // console.log(roles_id)
+                        navigate('/home');
                    }
                }).catch(({response}) => {
                setError('email', {
@@ -51,11 +52,12 @@ export default function UserLogin() {
        {
            await UserApi.register(values.email, values.password).then(
                ({status, data}) => {
+                   console.log(data)
                    if (status === 200) {
                        setToken(data.token)
                        setAuthenticated(true)
-                       const {role} = data.user
-                       navigate(redirectToDashboard(role));
+                       // const {roles_id} = data.user
+                       navigate('/home');
                    }
                }).catch(({response}) => {
                setError('email', {
