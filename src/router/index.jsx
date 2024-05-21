@@ -13,6 +13,7 @@ import Layout from "../layouts/Layout.jsx";
 // import ManageStudents from "../components/Admin/Pages/ManageStudents.jsx";
 // import UserLogin from "@/components/Auth/UserLogin.jsx";
 import {Login} from "@/pages/Login.jsx";
+import AppShell from "@/components/app-shell.jsx";
 
 export const LOGIN_ROUTE = '/login'
 export const STUDENT_DASHBOARD_ROUTE = '/student/dashboard'
@@ -22,6 +23,7 @@ export const ADMIN_MANAGE_PARENTS_ROUTE = ADMIN_BASE_ROUTE + '/manage-parents'
 export const ADMIN_MANAGE_STUDENTS_ROUTE = ADMIN_BASE_ROUTE + '/manage-students'
 export const TEACHER_DASHBOARD_ROUTE = '/teacher/dashboard'
 export const PARENT_DASHBOARD_ROUTE = '/parent/dashboard'
+export const HOME_ROUTE = '/home'
 export const redirectToDashboard = (roleType) => {
     switch (roleType) {
         case 'student':
@@ -42,22 +44,15 @@ export const router = createBrowserRouter([
                 path: '/',
                 element: <Login/>
             },
-            {
-                path: '*',
-                element: <NotFound/>
-            },
+
+
+
         ]
     },
-    // {
-    //     element: <GuestLayout/>,
-    //     children: [
-    //         {
-    //             path: LOGIN_ROUTE,
-    //             element: <Login/>
-    //         },
-    //     ]
-    // },
-    // {
+    {
+        path: HOME_ROUTE,
+        element: <AppShell/>
+    },
     //     element: <StudentDashboardLayout/>,
     //     children: [
     //         {

@@ -6,7 +6,7 @@ import {Input} from "../ui/input.jsx";
 import {Button} from "../ui/button.jsx";
 import {useNavigate} from "react-router-dom";
 import {
-    ADMIN_DASHBOARD_ROUTE,
+    ADMIN_DASHBOARD_ROUTE, HOME_ROUTE,
     PARENT_DASHBOARD_ROUTE, redirectToDashboard,
     STUDENT_DASHBOARD_ROUTE,
     TEACHER_DASHBOARD_ROUTE
@@ -41,7 +41,7 @@ export default function UserLogin() {
                        setAuthenticated(true)
                        // const {roles_id} = data.user
                        // console.log(roles_id)
-                        navigate('/home');
+                        navigate(HOME_ROUTE);
                    }
                }).catch(({response}) => {
                setError('email', {
@@ -57,7 +57,7 @@ export default function UserLogin() {
                        setToken(data.token)
                        setAuthenticated(true)
                        // const {roles_id} = data.user
-                       navigate('/home');
+                       navigate(HOME_ROUTE);
                    }
                }).catch(({response}) => {
                setError('email', {

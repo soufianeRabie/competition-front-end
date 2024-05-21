@@ -3,6 +3,7 @@ import UserApi from "../services/Api/UserApi.js";
 
 export const UserStateContext = createContext({
   user: {},
+
   authenticated: false,
   setUser: () => {
   },
