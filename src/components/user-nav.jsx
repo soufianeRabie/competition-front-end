@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar.jsx'
 import { Button } from '@/components/custom/button'
 import {
   DropdownMenu,
@@ -10,14 +10,19 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useAuth } from '../Context/GlobalState.jsx'
 import { useNavigate } from 'react-router-dom'
+import UserApi from "@/services/Api/UserApi.js";
+import {logout} from "@/library/index.jsx";
+import {useUserContext} from "@/context/UserContext.jsx";
 
 export function UserNav() {
-  const { logout, dispatch } = useAuth()
+  // const { logout, dispatch } = useAuth()
   const navigate = useNavigate()
+  const {state, dispatch} = useUserContext()
+  const user  = state?.user ;
   const handleLogout = async () => {
-    await logout(navigate, dispatch)
+    // await logout(navigate, dispatch)
+        logout(navigate , dispatch)
   }
   return (
     <DropdownMenu>
@@ -32,9 +37,9 @@ export function UserNav() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">satnaing</p>
+            <p className="text-sm font-medium leading-none"></p>
             <p className="text-xs leading-none text-muted-foreground">
-              satnaingdev@gmail.com
+              {user?.email}
             </p>
           </div>
         </DropdownMenuLabel>

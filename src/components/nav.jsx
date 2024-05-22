@@ -27,6 +27,7 @@ import {buttonVariants} from "@/components/ui/button.jsx";
 
 
 export default function Nav({ links, isCollapsed, className, closeNav }) {
+    console.log(links)
   const renderLink = ({ sub, ...rest }) => {
     const key = `${rest.title}-${rest.href}`
     if (isCollapsed && sub)
@@ -59,7 +60,7 @@ export default function Nav({ links, isCollapsed, className, closeNav }) {
     >
       <TooltipProvider delayDuration={0}>
         <nav className="grid gap-1 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
-          {links.map(renderLink)}
+          {links?.map(renderLink)}
         </nav>
       </TooltipProvider>
     </div>

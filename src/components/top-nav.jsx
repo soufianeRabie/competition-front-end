@@ -6,8 +6,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Button } from '../../../isticg_project/src/components/utils/custom/button'
+
 import { IconMenu } from '@tabler/icons-react'
+import {Button} from "@/components/custom/button.jsx";
 
 export function TopNav({ className, links, ...props }) {
   return (

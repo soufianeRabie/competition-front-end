@@ -1,9 +1,17 @@
 import { Outlet } from 'react-router-dom'
 import Sidebar from './sidebar.jsx'
 import useIsCollapsed from '@/hooks/use-is-collapsed.jsx'
+import UserApi from "@/services/Api/UserApi.js";
 
 export default function AppShell() {
   const [isCollapsed, setIsCollapsed] = useIsCollapsed()
+
+   const fetchInit = async()=>
+    {
+        const response =await UserApi.getInit()
+    }
+
+    fetchInit()
   return (
       <div className='relative h-full overflow-hidden bg-background'>
         <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />

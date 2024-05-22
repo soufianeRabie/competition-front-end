@@ -31,19 +31,15 @@ import {
 } from 'lucide-react'
 import UserApi from "../../services/Api/UserApi.js";
 import {LOGIN_ROUTE} from "../../router/index.jsx";
-import {useUserContext} from "../../context/StudentContext.jsx";
 import {useNavigate} from "react-router-dom";
+import {useUserContext} from "@/context/UserContext.jsx";
+import {logout} from "@/library/index.jsx";
 
 export default function DefaultDropDownMenu({children}) {
   const navigate = useNavigate()
-  const {logout: contextLogout, user} = useUserContext()
+  const {state, dispatch} = useUserContext()
 
-  const logout = async () => {
-    UserApi.logout().then(() => {
-      contextLogout()
-      navigate(LOGIN_ROUTE)
-    })
-  }
+
   return <>
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -56,7 +52,7 @@ export default function DefaultDropDownMenu({children}) {
           {children}
         </DropdownMenuGroup>
         <DropdownMenuSeparator/>
-        <DropdownMenuItem onClick={logout}>
+        <DropdownMenuItem onClick={handleLogout}>
           <LogOut className="mr-2 h-4 w-4"/>
           <span>Log out</span>
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>

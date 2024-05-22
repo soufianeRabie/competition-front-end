@@ -4,7 +4,8 @@ import { Layout, LayoutHeader } from './custom/layout'
 import { Button } from './custom/button'
 import Nav from './nav.jsx'
 import { cn } from '@/components/lib/utils'
-import { sidelinks } from '@/data/sidelinks'
+import {useUserContext} from "@/context/UserContext.jsx";
+import {getDashboardLinks} from "@/library/index.jsx";
 
 
 export default function Sidebar({
@@ -13,6 +14,7 @@ export default function Sidebar({
                                    setIsCollapsed,
                                  }) {
   const [navOpened, setNavOpened] = useState(false)
+  const {state, dispatch} = useUserContext()
 
   /* Make body not scrollable when navBar is opened */
   useEffect(() => {
@@ -73,8 +75,8 @@ export default function Sidebar({
               <div
                   className={`flex flex-col justify-end truncate ${isCollapsed ? 'invisible w-0' : 'visible w-auto'}`}
               >
-                <span className='font-medium'>Shadcn Admin</span>
-                <span className='text-xs'>Vite + ShadcnUI</span>
+                <span className='font-medium'>{state?.user?.role_name} Dashboard </span>
+                <span className='text-xs'>HAKCATON</span>
               </div>
             </div>
 
@@ -98,7 +100,7 @@ export default function Sidebar({
               className={`h-full flex-1 overflow-auto ${navOpened ? 'max-h-screen' : 'max-h-0 py-0 md:max-h-screen md:py-2'}`}
               closeNav={() => setNavOpened(false)}
               isCollapsed={isCollapsed}
-              links={sidelinks}
+              links={getDashboardLinks(state?.user?.role_name)}
           />
 
           {/* Scrollbar width toggle button */}

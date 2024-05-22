@@ -1,4 +1,4 @@
-import {createBrowserRouter} from "react-router-dom";
+import {createBrowserRouter, Navigate} from "react-router-dom";
 import NotFound from "../pages/NotFound.jsx";
 import Layout from "../layouts/Layout.jsx";
 // import GuestLayout from "../layouts/GuestLayout.jsx";
@@ -14,6 +14,13 @@ import Layout from "../layouts/Layout.jsx";
 // import UserLogin from "@/components/Auth/UserLogin.jsx";
 import {Login} from "@/pages/Login.jsx";
 import AppShell from "@/components/app-shell.jsx";
+import Dashboard from "@/pages/dashboard/index.jsx";
+import Intervenants from "@/components/CRUD/Intervenant/intervenants.jsx";
+import IntervenantList from "@/components/data-table/Tables/IntervenantsList.jsx";
+import ActionsList from "@/components/data-table/Tables/Actions/Actions.jsx";
+import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute.jsx";
+import SettingsProfile from "@/pages/profile/index.jsx";
+import AddIntervenant from "@/components/CRUD/Intervenant/AddIntervenant.jsx";
 
 export const LOGIN_ROUTE = '/login'
 export const STUDENT_DASHBOARD_ROUTE = '/student/dashboard'
@@ -24,35 +31,56 @@ export const ADMIN_MANAGE_STUDENTS_ROUTE = ADMIN_BASE_ROUTE + '/manage-students'
 export const TEACHER_DASHBOARD_ROUTE = '/teacher/dashboard'
 export const PARENT_DASHBOARD_ROUTE = '/parent/dashboard'
 export const HOME_ROUTE = '/home'
-export const redirectToDashboard = (roleType) => {
-    switch (roleType) {
-        case 'student':
-            return (STUDENT_DASHBOARD_ROUTE);
-        case 'admin':
-            return (ADMIN_DASHBOARD_ROUTE)
-        case 'teacher':
-            return (TEACHER_DASHBOARD_ROUTE)
-        case 'parent':
-            return (PARENT_DASHBOARD_ROUTE)
-    }
+export const redirectToDashboard = () => {
+   return  <Navigate to={HOME_ROUTE}/>
+}
+
+export const redirect_to_login = ()=>
+{
+    return <Navigate to={LOGIN_ROUTE}/>
 }
 export const router = createBrowserRouter([
+    // {
+    //     path : '/',
+    //     element : redirect_to_login()
+    // },
     {
         element: <Layout/>,
         children: [
             {
-                path: '/',
+                path: '/login',
                 element: <Login/>
             },
 
+        ],
 
-
-        ]
     },
     {
-        path: HOME_ROUTE,
-        element: <AppShell/>
-    },
+        element: <ProtectedRoute >
+            <AppShell/></ProtectedRoute>
+        ,
+            children: [
+                {
+                    path: HOME_ROUTE,
+                    element: <Dashboard/>
+                },
+                {
+                    path: 'intervenants',
+                    element: <IntervenantList/>
+                },
+                {
+                    path: 'actions',
+                    element: <ActionsList/>
+                },
+                {
+                    path: 'profile',
+                    element: <SettingsProfile/>
+                }
+            ]
+    }
+
+
+
     //     element: <StudentDashboardLayout/>,
     //     children: [
     //         {
