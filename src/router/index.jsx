@@ -17,10 +17,14 @@ import AppShell from "@/components/app-shell.jsx";
 import Dashboard from "@/pages/dashboard/index.jsx";
 import Intervenants from "@/components/CRUD/Intervenant/intervenants.jsx";
 import IntervenantList from "@/components/data-table/Tables/IntervenantsList.jsx";
-import ActionsList from "@/components/data-table/Tables/Actions/Actions.jsx";
+import ActionsList from "@/components/data-table/Tables/Actions.jsx";
 import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute.jsx";
 import SettingsProfile from "@/pages/profile/index.jsx";
 import AddIntervenant from "@/components/CRUD/Intervenant/AddIntervenant.jsx";
+import AddExercice from "@/components/CRUD/Action/AddAction.jsx";
+import UsersList from "@/components/data-table/Tables/UsersList.jsx";
+import {AdminRoute} from "@/components/ProtectedRoutes/AdminRoute.jsx";
+import ResetPasswordPage from "@/components/Auth/ResetPasswordPage.jsx";
 
 export const LOGIN_ROUTE = '/login'
 export const STUDENT_DASHBOARD_ROUTE = '/student/dashboard'
@@ -51,6 +55,10 @@ export const router = createBrowserRouter([
                 path: '/login',
                 element: <Login/>
             },
+            {
+                path: '/reset-password/:token',
+                element: <ResetPasswordPage/>
+            }
 
         ],
 
@@ -75,7 +83,14 @@ export const router = createBrowserRouter([
                 {
                     path: 'profile',
                     element: <SettingsProfile/>
-                }
+                },
+                {
+                    path: 'users',
+                    element:<AdminRoute>
+                        <UsersList/>
+                    </AdminRoute>
+                },
+
             ]
     }
 

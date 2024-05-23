@@ -12,6 +12,7 @@ import UserApi from "@/services/Api/UserApi.js";
 import {HOME_ROUTE} from "@/router/index.jsx";
 import {toast} from "sonner";
 import {setTokenInLocalStorage} from "@/library/index.jsx";
+import {ResetPassword} from "@/components/Auth/ResetPassword.jsx";
 
 const formSchema = z.object({
     email: z.string().email().min(2).max(30),
@@ -22,6 +23,7 @@ export default function UserLogin() {
     const lienText = isLogin ? 'dont have an account register' : 'go to login'
     const navigate = useNavigate()
     const {state , dispatch} = useUserContext()
+    const [isOpen, setIsOpen] = useState(false);
     const loadingSentence = isLogin? 'login in progress...' : 'register in progress...'
     const form = useForm({
         resolver: zodResolver(formSchema , ),defaultValues:{
@@ -43,9 +45,9 @@ export default function UserLogin() {
                        if (status === 200 && data) {
                            setTokenInLocalStorage(data?.token)
                            dispatch({
-                               type : 'SET_USER',
+                               type : 'SET_INIT',
                                payload :{
-                                   user :  data.user
+                                   user :  data
                                }
                            })
                            navigate(HOME_ROUTE);
@@ -129,5 +131,8 @@ export default function UserLogin() {
      <div>
          <span className={'text-blue-900 my-2 cursor-pointer'} onClick={()=>setIsLogin(prevState =>  !prevState)}> {lienText} </span>
      </div>
+        <div onClick={()=>setIsOpen(true)}>forget password</div>
+
+        <ResetPassword isOpen={isOpen} setIsOpen={setIsOpen}/>
     </>
 }

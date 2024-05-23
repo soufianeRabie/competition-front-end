@@ -38,20 +38,10 @@ const AddIntervenant = ({setOpen}) => {
         mode: 'onChange',
     })
     const {register , formState : {errors}} = form
+    const {state : {users ,  etablissements}} = useUserContext()
 
+    console.log(users , etablissements)
 
-    const [etablissements, setEtablissements] = useState([]);
-    const [users, setUsers] = useState([]);
-    const {state} = useUserContext()
-
-    useEffect(() => {
-        async function fetchData() {
-            const response = await UserApi.getInit();
-            setEtablissements(response?.data?.etablisments);
-            setUsers(response?.data.Users);
-        }
-        fetchData();
-    }, []);
 
     const onSubmit = async (data) => {
         const AddIntervenatLoading = toast.loading('updating profile in progress...')

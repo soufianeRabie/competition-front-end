@@ -30,6 +30,8 @@ export function DataTable({setSelectedRows = ()=>{},columns, data, filterBy, mes
     const [open, setOpen] = useState(false);
     const [rowSelection, setRowSelection] = useState({})
 
+
+
     const table = useReactTable({
     data,
     columns,
@@ -49,6 +51,7 @@ export function DataTable({setSelectedRows = ()=>{},columns, data, filterBy, mes
     },
   })
 
+    console.log('all columns ' ,table.getAllColumns())
     useEffect(() => {
         setSelectedRows(table.getSelectedRowModel().rows)
     }, []);

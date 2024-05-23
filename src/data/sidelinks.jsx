@@ -9,28 +9,40 @@ export const ADMIN_SIDE_LINKS = [
     icon: <TimerIcon size={18} />,
   },
   {
+    title: 'dashboard',
+    label: '3',
+    href: '/home',
+    icon: <IconChecklist size={18} />,
+  },
+  {
     title: 'actions',
     label: '3',
     href: 'actions',
     icon: <IconChecklist size={18} />,
   },
   {
-    title: 'gestion profile',
+    title: 'profile',
     label: '',
     href: 'profile',
+    icon: <TimerIcon size={18} />,
+  },
+  {
+    title: 'users',
+    label: '',
+    href: 'users',
     icon: <TimerIcon size={18} />,
   },
 
 ]
 export const ENTREPRISE_SIDE_LINKS = [
   {
-    title: 'intervenants',
-    label: '',
-    href: 'intervenants',
-    icon: <TimerIcon size={18} />,
+    title: 'dashboard',
+    label: '3',
+    href: '/home',
+    icon: <IconChecklist size={18} />,
   },
   {
-    title: 'gestion profile',
+    title: 'profile',
     label: '',
     href: 'profile',
     icon: <TimerIcon size={18} />,
@@ -41,25 +53,28 @@ export const ENTREPRISE_SIDE_LINKS = [
     href: 'actions',
     icon: <IconChecklist size={18} />,
   },
-  {
-    title: 'dashboard',
-    label: '3',
-    href: '/home',
-    icon: <IconChecklist size={18} />,
-  },
+
 ]
 export const INTERVENANT_SIDE_LINKS = [
   {
-    title: 'gestion profile',
-    label: '',
-    href: 'profile',
-    icon: <TimerIcon size={18} />,
-  }, {
     title: 'dashboard',
     label: '3',
     href: '/home',
     icon: <IconChecklist size={18} />,
   },
+  {
+    title: 'actions',
+    label: '3',
+    href: '/actions',
+    icon: <IconChecklist size={18} />,
+  },
+    {
+    title: 'profile',
+    label: '',
+    href: 'profile',
+    icon: <TimerIcon size={18} />,
+  },
+
 ]
 export const LOCAL_SIDE_LINKS = [
   {
@@ -76,17 +91,21 @@ export const LOCAL_SIDE_LINKS = [
 ]
 export const REGIONAL_SIDE_LINKS = [
   {
-    title: 'gestion profile',
-    label: '',
-    href: 'profile',
-    icon: <TimerIcon size={18} />,
-  }, {
     title: 'dashboard',
     label: '3',
     href: '/home',
     icon: <IconChecklist size={18} />,
   },
+  {
+    title: ' profile',
+    label: '',
+    href: 'profile',
+    icon: <TimerIcon size={18} />,
+  },
+  {
+    title: 'actions',
+    label: '3',
+    href: '/actions',
+    icon: <IconChecklist size={18} />,
+  },
 ]
-// export const sidelinks = [
-//   {}
-// ]

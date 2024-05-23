@@ -40,8 +40,30 @@ const UserApi = {
   DeleteInv : async (id)=>
   {
     return await axiosClient.delete('/intervenants/' + id)
+  },
+  DeleteAction : async (id)=>
+  {
+    return await axiosClient.delete('/actions/' + id)
+  },
+  addExercice : async (data) => {
+    return await axiosClient.post('/actions' , data)
+  },
+  ValidateAction : async (id)=> {
+    return await axiosClient.put('/actions/validate/' + id );
+  },
+  Catalogue : async ()=> {
+    return await axiosClient.get('/catalogue/download')
+  },
+  CreateProfile : async (data)=> {
+    return await axiosClient.post('/profiles' , data)
+  },
+  UpdateUserRole : async (role , id)=> {
+    return await axiosClient.post('/users/role/' + id  , {role })
+  },
+  ResetPassword : async (email)=>
+  {
+    return await axiosClient.post('/password/email' , {email})
   }
-
 
 }
 export default UserApi

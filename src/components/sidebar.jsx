@@ -25,6 +25,8 @@ export default function Sidebar({
     }
   }, [navOpened])
 
+  console.log('user' , state?.user)
+
   return (
       <aside
           className={cn(

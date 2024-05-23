@@ -30,39 +30,51 @@ const profileFormSchema = z.object({
     telephone: z.string().nullable(),
 })
 
-const defaultValues = {
-    prenom: '',
-    nom: '',
-    date_de_naissance: '',
-    genre: '',
-    adresse: '',
-    telephone: '',
-}
+
 
 export default function UserForm() {
+    const {state} = useUserContext()
+    const user = state?.user ;
+    const userProfile = user?.profile
+
+    console.log('user' , user)
+    const defaultValues = {
+        prenom: userProfile?.prenom,
+        nom: userProfile?.nom,
+        date_de_naissance: userProfile?.date_de_naissance,
+        genre: userProfile?.genre,
+        adresse: userProfile?.adresse,
+        telephone: userProfile?.telephone,
+    }
     const form = useForm({
         resolver: zodResolver(profileFormSchema),
         defaultValues,
         mode: 'onChange',
     })
 
-    const {state} = useUserContext()
-    const user = state?.user ;
+
+    const isAlreadyHaveAnProfile  = user?.profile?.id
+    const handleProfile = async (data )=>
+    {
+        if(isAlreadyHaveAnProfile)
+        {
+            return await UserApi.updateUserProfile(data , user?.profile.id )
+        }
+        return await UserApi.CreateProfile(data);
+    }
     const  onSubmit= async (data ) =>{
 
         const editUserProfileLoading = toast.loading('updating profile in progress...')
         try {
-            const response = await UserApi.updateUserProfile(data , user?.id) ;
+            const response = await handleProfile(data)
+            toast.dismiss(editUserProfileLoading)
+
             if(response.data && response?.status === 200)
             {
                 toast({
 
-                    title: 'You submitted the following values:',
-                        description: (
-                    <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-                  <code className='text-white'>{'the profile updated successfully'}</code>
-               </pre>
-                ),
+                    title: 'updated successfully',
+                        description:  'the profile was updated successfully'
                 })
             }else
             {
@@ -70,10 +82,10 @@ export default function UserForm() {
             }
         }catch (e)
         {
+            toast.dismiss(editUserProfileLoading);
             toast.error(e?.message || 'something went wrong');
         }
 
-        toast.dismiss(editUserProfileLoading)
     }
 
     return (
@@ -217,7 +229,7 @@ export default function UserForm() {
                 {/*        </FormItem>*/}
                 {/*    )}*/}
                 {/*/>*/}
-                <Button type='submit'>Update Profile</Button>
+                <Button type='submit'>{isAlreadyHaveAnProfile ?'Update' : 'add'} Profile</Button>
             </form>
         </Form>
     )

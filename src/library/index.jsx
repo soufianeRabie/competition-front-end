@@ -20,7 +20,9 @@ export const logout = (navigate, dispatch) => {
     localStorage.removeItem(TokenName)
     dispatch({
         type: 'SET_USER',
-        user: null,
+        payload: {
+            user : null
+        },
     })
     return navigate(LOGIN_ROUTE)
 }

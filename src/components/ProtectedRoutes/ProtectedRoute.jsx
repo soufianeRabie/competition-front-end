@@ -15,7 +15,8 @@ function ProtectedRoute({ children }) {
     const checkAuth = async ()=>
     {
 
-      if ((!isToken() && !user) || !isToken()) {
+      if (!isToken()) {
+          logout(navigate , dispatch)
        return   navigate(LOGIN_ROUTE)
       }
       try {

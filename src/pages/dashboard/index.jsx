@@ -14,6 +14,8 @@ import { UserNav } from '@/components/user-nav'
 import { Layout, LayoutBody, LayoutHeader } from '@/components/custom/layout'
 import { RecentSales } from './components/recent-sales.jsx'
 import { Overview } from './components/overview.jsx'
+import {SelectSpecifiqueRegion} from "@/assets/SelectSpecifiqueRegion.jsx";
+import {Reports} from "@/pages/dashboard/components/Reports.jsx";
 
 export default function Dashboard() {
   return (
@@ -176,6 +178,9 @@ export default function Dashboard() {
                 </CardContent>
               </Card>
             </div>
+          </TabsContent>
+          <TabsContent value={'reports'}  className='space-y-4'>
+           <Reports/>
           </TabsContent>
         </Tabs>
       </LayoutBody>

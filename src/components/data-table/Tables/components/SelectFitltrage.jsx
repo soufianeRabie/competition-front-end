@@ -6,23 +6,19 @@ import {
     SelectTrigger,
     SelectValue
 } from "@/components/ui/select.jsx";
-import {useUserContext} from "@/context/UserContext.jsx";
 
-export const SelectSpecifiqueRegion = ({setRegion}) => {
-
-    const {state : {regions}} = useUserContext()
-
+export const SelectFilterBy = ({filtrageItem = [] , setFiltredBy}) => {
 
 
     const onRegionChange = (value)=>
     {
-        setRegion(value)
-;    }
+            setFiltredBy(value);
+    }
 
-    const displayGroups = ()=>
+    const displayItem = ()=>
     {
-        return regions?.map((region)=><SelectItem key={region?.id}
-                                                value={region}>{region.nom_region}</SelectItem>)
+        return filtrageItem?.map((item , key)=><SelectItem key={key}
+                                                  value={filtrageItem[key]}>{filtrageItem[key]}</SelectItem>)
     }
     return (
         <>
@@ -33,7 +29,7 @@ export const SelectSpecifiqueRegion = ({setRegion}) => {
                 <SelectContent>
                     <SelectGroup>
                         <SelectLabel>regions</SelectLabel>
-                        {displayGroups()}
+                        {displayItem()}
                     </SelectGroup>
                 </SelectContent>
             </Select>
