@@ -1,36 +1,49 @@
 import {
-    flexRender,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    useReactTable,
-} from '@tanstack/react-table'
-import {Search} from '@/components/search.jsx'
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import { Search } from "@/components/search.jsx";
 
-import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from '../ui/table.jsx'
-import {useEffect, useState} from 'react'
-import {Input} from '../ui/input.jsx'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../ui/table.jsx";
+import { useEffect, useState } from "react";
+import { Input } from "../ui/input.jsx";
 
-import {DataTableViewOptions} from './DataTableViewOptions.jsx'
-import {DataTablePagination} from './DataTablePagination.jsx'
+import { DataTableViewOptions } from "./DataTableViewOptions.jsx";
+import { DataTablePagination } from "./DataTablePagination.jsx";
 // import {topNav} from "../../../pages/Dahsboard/index.jsx";
-import {UserNav} from "../user-nav.jsx";
-import {Add} from "@/components/data-table/components/Add.jsx";
-import {LayoutHeader} from "@/components/custom/layout.jsx";
+import { UserNav } from "../user-nav.jsx";
+import { Add } from "@/components/data-table/components/Add.jsx";
+import { LayoutHeader } from "@/components/custom/layout.jsx";
 
+export function DataTable({
+  setSelectedRows = () => {},
+  columns,
+  data,
+  filterBy,
+  messageFilter,
+  addAction,
+  actionName,
+  name,
+  showHead = true,
+}) {
+  const [sorting, setSorting] = useState([]);
+  const [columnFilters, setColumnFilters] = useState([]);
+  const [columnVisibility, setColumnVisibility] = useState({});
+  const [open, setOpen] = useState(false);
+  const [rowSelection, setRowSelection] = useState({});
 
-
-export function DataTable({setSelectedRows = ()=>{},columns, data, filterBy, messageFilter, addAction,actionName ,name , showHead = true}) {
-
-
-  const [sorting, setSorting] = useState([])
-  const [columnFilters, setColumnFilters] = useState([])
-  const [columnVisibility, setColumnVisibility] = useState({})
-    const [open, setOpen] = useState(false);
-    const [rowSelection, setRowSelection] = useState({})
-
-    const table = useReactTable({
+  const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -39,48 +52,53 @@ export function DataTable({setSelectedRows = ()=>{},columns, data, filterBy, mes
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
-        getPaginationRowModel: getPaginationRowModel(),
-        onRowSelectionChange: setRowSelection,
+    getPaginationRowModel: getPaginationRowModel(),
+    onRowSelectionChange: setRowSelection,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
-        rowSelection,
+      rowSelection,
     },
-  })
+  });
 
-    useEffect(() => {
-        setSelectedRows(table.getSelectedRowModel().rows)
-    }, []);
+  useEffect(() => {
+    setSelectedRows(table.getSelectedRowModel().rows);
+  }, []);
   return (
     <>
-
-            <LayoutHeader>
-            {/*<TopNav links={topNav} />*/}
-            <div className="ml-auto flex items-center space-x-4">
-                {/* eslint-disable-next-line react/jsx-no-undef */}
-                <Search />
-                <UserNav />
-            </div>
-        </LayoutHeader>
-      <div className="flex items-center py-4">
+      <LayoutHeader>
+        {/*<TopNav links={topNav} />*/}
+        <div className='ml-auto flex items-center space-x-4'>
+          {/* eslint-disable-next-line react/jsx-no-undef */}
+          <Search />
+          <UserNav />
+        </div>
+      </LayoutHeader>
+      <div className='flex items-center py-4'>
         <Input
           placeholder={messageFilter}
-          value={table.getColumn(filterBy)?.getFilterValue() ?? ''}
+          value={table.getColumn(filterBy)?.getFilterValue() ?? ""}
           onChange={(event) =>
             table.getColumn(filterBy)?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className='max-w-sm'
         />
-          <div className={'flex justify-end items-end w-full'}>
-              {addAction &&
-                  <Add open={open} setOpen={setOpen} addAction={addAction} name={name} actionName={actionName}/>
-              }
+        <div className={"flex justify-end items-end w-full"}>
+          {addAction && (
+            <Add
+              open={open}
+              setOpen={setOpen}
+              addAction={addAction}
+              name={name}
+              actionName={actionName}
+            />
+          )}
 
-              <DataTableViewOptions table={table}/>
-          </div>
+          <DataTableViewOptions table={table} />
+        </div>
       </div>
-      <div className="rounded-md border">
+      <div className='rounded-md border'>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -95,7 +113,7 @@ export function DataTable({setSelectedRows = ()=>{},columns, data, filterBy, mes
                             header.getContext(),
                           )}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -105,7 +123,7 @@ export function DataTable({setSelectedRows = ()=>{},columns, data, filterBy, mes
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
+                  data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -121,7 +139,7 @@ export function DataTable({setSelectedRows = ()=>{},columns, data, filterBy, mes
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className='h-24 text-center'
                 >
                   No results.
                 </TableCell>
@@ -132,5 +150,5 @@ export function DataTable({setSelectedRows = ()=>{},columns, data, filterBy, mes
         <DataTablePagination table={table} />
       </div>
     </>
-  )
+  );
 }

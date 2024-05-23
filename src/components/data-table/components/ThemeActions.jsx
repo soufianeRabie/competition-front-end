@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/dropdown-menu.jsx";
 import { Button } from "@/components/ui/button.jsx";
 import { MoreHorizontal } from "lucide-react";
-
 import { useState } from "react";
 import {
   AlertDialog,
@@ -22,15 +21,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog.jsx";
 import { toast } from "sonner";
-import UserApi from "@/services/Api/UserApi.js";
-import { Add } from "@/components/data-table/components/Add.jsx";
-import AddIntervenant from "@/components/CRUD/RegioCentreManager/Intervenant/AddIntervenant.jsx";
-import EditIntervenant from "@/components/CRUD/RegioCentreManager/Intervenant/EditIntervenant.jsx";
+import ThemeApi from "@/services/Api/ThemeApi.js"; // Import ThemeApi instead of CertificationApi
 
-export const IntervenantActions = ({ id }) => {
-  // console.log(TrainerId)
+export const ThemeActions = ({ themeId }) => {
   const [open, setOpen] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
+
   return (
     <>
       <DropdownMenu>
@@ -46,32 +42,30 @@ export const IntervenantActions = ({ id }) => {
         <DropdownMenuContent align='end'>
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <AlertDialog open={isDelete}>
-            <DropdownMenuItem
-            // onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
+            <DropdownMenuItem>
               <AlertDialogTrigger asChild>
-                <span onClick={() => setIsDelete(true)}> Delete</span>
+                <span onClick={() => setIsDelete(true)}>Delete</span>
               </AlertDialogTrigger>
             </DropdownMenuItem>
           </AlertDialog>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setOpen(true)}>
-            Edit Module
+            Edit Theme
           </DropdownMenuItem>
-          <DropdownMenuItem>Affect to trainer</DropdownMenuItem>
+          {/* Other actions */}
         </DropdownMenuContent>
       </DropdownMenu>
 
       {open && (
         <Add
           actionName={"Edit"}
-          name={"intervenant"}
+          name={"Theme"}
           setOpen={setOpen}
           open={open}
           addAction={(setOpen) => (
-            <EditIntervenant
-              id={id}
+            <EditTheme
               setOpen={setOpen}
+              themeId={themeId} // Pass themeId instead of certId
             />
           )}
         />
@@ -81,19 +75,10 @@ export const IntervenantActions = ({ id }) => {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Are you absolutely sure to delete
-              <span className={"font-bold"}>
-                {" "}
-                {/*{firstname} {lastname}*/}
-              </span>{" "}
-              ?
+              Are you sure you want to delete this theme?
             </AlertDialogTitle>
             <AlertDialogDescription>
-              <span className={"text-lg"}> This action cannot be undone.</span>
-              <span className={"text-red-600 text-lg font-mono"}>
-                {" "}
-                This will permanently delete All seances and of this trainer{" "}
-              </span>
+              This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -105,27 +90,16 @@ export const IntervenantActions = ({ id }) => {
                 const deletingLoader = toast.loading("Deleting in progress.");
 
                 try {
-                  const response = await UserApi.DeleteInv(id);
+                  const response = await ThemeApi.deleteTheme(
+                    themeId, // Pass themeId instead of certId
+                  );
                   toast.dismiss(deletingLoader);
-                  // if (response?.status === 200) {
-                  //     dispatch({
-                  //         type: 'DELETE_DELIVERY',
-                  //         payload: {
-                  //             id: id,
-                  //         },
-                  //     })
-                  //     setData(data.filter((delivery) => delivery.id !== id))
-                  //     toast.success('delivery deleted', {
-                  //         description: `delivery deleted successfully`,
-                  //         icon: <Trash2Icon />,
-                  //     })
-                  // }
+                  if (response?.status === 200) {
+                    toast.success("Theme deleted successfully");
+                  }
                 } catch (err) {
                   toast.dismiss(deletingLoader);
-                  toast.success("trainer not deleted", {
-                    description: `trainer was not deleted try again after a while`,
-                    icon: <CircleX />,
-                  });
+                  toast.error("Theme not deleted. Please try again later.");
                 }
               }}
             >
