@@ -27,6 +27,7 @@ import ThemesList from "../components/data-table/Tables/ThemesList.jsx";
 import CompetencesList from "../components/data-table/Tables/CompetencesList.jsx";
 
 import ThemeIntervenants from "../components/CRUD/RegioCentreManager/OffreFormation(Themes)/ThemeIntervenants.jsx";
+import ResetPasswordPage from "@/components/Auth/ResetPasswordPage.jsx";
 
 export const LOGIN_ROUTE = "/login";
 export const STUDENT_DASHBOARD_ROUTE = "/student/dashboard";
@@ -58,6 +59,11 @@ export const router = createBrowserRouter([
                 path: '/login',
                 element: <Login/>
             },
+            {
+                path: '/reset-password/:token',
+                element: <ResetPasswordPage/>
+            }
+
 
         ],
 
@@ -80,6 +86,7 @@ export const router = createBrowserRouter([
                     path: "certifications",
                     element: <CertificationsList />,
                 },
+
                 {
                     path: "themes",
                     element: <ThemesList />,
