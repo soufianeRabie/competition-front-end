@@ -71,10 +71,28 @@ export const router = createBrowserRouter([
                     path: HOME_ROUTE,
                     element: <Dashboard/>
                 },
+
                 {
                     path: 'intervenants',
                     element: <IntervenantList/>
                 },
+                {
+                    path: "certifications",
+                    element: <CertificationsList />,
+                },
+                {
+                    path: "themes",
+                    element: <ThemesList />,
+                },
+                {
+                    path: DESIGNATION_ROUTE_INTERVENANT_TABLE,
+                    element: <ThemeIntervenants />,
+                },
+                {
+                    path: "competences",
+                    element: <CompetencesList />,
+                },
+
                 {
                     path: 'actions',
                     element: <ActionsList/>

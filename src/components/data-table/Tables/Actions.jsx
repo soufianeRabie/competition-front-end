@@ -4,7 +4,7 @@ import { DataTableColumnHeader } from '../DataTableColumnHeader.jsx';
 import UserApi from "@/services/Api/UserApi.js";
 import { Button } from "@/components/ui/button.jsx";
 import { exportToExcel } from "@/components/ExportToExecl.js";
-import { IntervenantActions } from "@/components/data-table/Tables/Actions/IntervenantAction.jsx";
+// import { IntervenantActions } from "@/components/data-table/Tables/Actions/IntervenantAction.jsx";
 import AddAction from "@/components/CRUD/Action/AddAction.jsx";
 import { ClassAction } from "@/components/data-table/Tables/Actions/ClassAction.jsx";
 import {SelectFilterBy} from "@/components/data-table/Tables/components/SelectFitltrage.jsx";

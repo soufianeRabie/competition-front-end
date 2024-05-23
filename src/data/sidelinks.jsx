@@ -27,15 +27,7 @@ export const ADMIN_SIDE_LINKS = [
     icon: <TimerIcon size={18} />,
   },
 ];
-export const ENTREPRISE_SIDE_LINKS = [
-  {
-    title: "intervenants",
-    label: "",
-    href: "intervenants",
-    icon: <TimerIcon size={18} />,
-  },
 
-]
 export const ENTREPRISE_SIDE_LINKS = [
   {
     title: "gestion profile",
@@ -51,14 +43,7 @@ export const ENTREPRISE_SIDE_LINKS = [
   },
 
 ]
-export const INTERVENANT_SIDE_LINKS = [
-  {
-    title: 'dashboard',
-    label: '3',
-    href: '/home',
-    icon: <IconChecklist size={18} />,
-  },
-];
+
 export const INTERVENANT_SIDE_LINKS = [
   {
     title: 'actions',

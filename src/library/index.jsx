@@ -28,9 +28,6 @@ export const isToken = ()=>
     return localStorage.getItem(TokenName)
 }
 
-export const isToken = () => {
-  return localStorage.getItem(TokenName);
-};
 
 export const getDashboardLinks = (role_name) => {
   switch (role_name) {

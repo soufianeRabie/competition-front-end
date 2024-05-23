@@ -51,15 +51,10 @@ const EditIntervenant = ({ id, setOpen }) => {
   const [users, setUsers] = useState([]);
   const { state } = useUserContext();
 
-  useEffect(() => {
-    async function fetchData() {
-      const response = await UserApi.getInit();
-      setEtablissements(response?.data?.etablisments);
-      setUsers(response?.data?.users);
-      console.log("etaa", response?.data?.etablisments);
-    }
-    fetchData();
-  }, []);
+    useEffect(() => {
+        setEtablissements(state?.etablissements)
+        setUsers(state?.users)
+    }, []);
 
   useEffect(() => {
     async function fetchIntervenant() {

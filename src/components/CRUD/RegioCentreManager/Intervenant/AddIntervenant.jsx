@@ -55,12 +55,8 @@ const AddIntervenant = ({ setOpen }) => {
   const { state } = useUserContext();
 
   useEffect(() => {
-    async function fetchData() {
-      const response = await UserApi.getInit();
-      setEtablissements(response?.data?.etablisments);
-      setUsers(response?.data.users);
-    }
-    fetchData();
+    setEtablissements(state?.etablissements)
+      setUsers(state?.users)
   }, []);
 
   const onSubmit = async (data) => {

@@ -4,7 +4,7 @@ import { DataTableColumnHeader } from "../../DataTableColumnHeader.jsx";
 import UserApi from "@/services/Api/UserApi.js";
 import { Button } from "@/components/ui/button.jsx";
 import { exportToExcel } from "@/components/ExportToExecl.js";
-import { SelectSpecifiqueGroup } from "@/assets/SelectSpecifiqueRegion.jsx";
+import {SelectSpecifiqueRegion} from "@/assets/SelectSpecifiqueRegion.jsx";
 
 export default function ActionsList() {
   const [data, setData] = useState([]);
@@ -85,7 +85,7 @@ export default function ActionsList() {
   return (
     <>
       <Button onClick={handleExport}>export to exe</Button>
-      <SelectSpecifiqueGroup />
+      <SelectSpecifiqueRegion />
       {data?.length > 0 ? (
         <DataTable
           id='actions-table'
