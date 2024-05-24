@@ -1,9 +1,6 @@
 import { DataTable } from '../DataTable.jsx'
 import { useEffect, useState } from 'react'
 import { DataTableColumnHeader } from '../DataTableColumnHeader.jsx'
-import UserApi from "@/services/Api/UserApi.js";
-import AddIntervenant from "@/components/CRUD/Intervenant/AddIntervenant.jsx";
-import {IntervenantActions} from "@/components/data-table/Tables/Actions/IntervenantAction.jsx";
 import {useUserContext} from "@/context/UserContext.jsx";
 import {DialogContent, Dialog, DialogDescription,DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/dialog.jsx";
 import {Button} from "@/components/ui/button.jsx";

@@ -4,9 +4,12 @@ import { DataTableColumnHeader } from "../DataTableColumnHeader.jsx";
 import UserApi from "@/services/Api/UserApi.js";
 import AddIntervenant from "@/components/CRUD/RegioCentreManager/Intervenant/AddIntervenant.jsx";
 import { IntervenantActions } from "@/components/data-table/Tables/Actions/IntervenantAction.jsx";
+import {useUserContext} from "@/context/UserContext.jsx";
 
 export default function IntervenantList() {
   const [data, setData] = useState([]);
+  const {state : {intervennats}} = useUserContext();
+
 
   const AdminIntervenantColumns = [
     {
@@ -122,25 +125,19 @@ export default function IntervenantList() {
     {
       id: "actions",
       cell: ({ row }) => {
-        const id = row?.original?.id;
-        return <IntervenantActions id={id} />;
+        const {id , type_intervenant} = row?.original;
+        return <IntervenantActions id={id} type={type_intervenant} />;
       },
     },
   ];
 
   useEffect(() => {
-    async function fetchData() {
-      const response = await UserApi.getInv();
-      setData(response?.data);
-      console.log(data);
-    }
 
-    fetchData();
-  }, []);
+ setData(intervennats)
+  }, [intervennats]);
 
   return (
     <>
-      {data?.length > 0 ? (
         <DataTable
           columns={AdminIntervenantColumns}
           data={data}
@@ -149,13 +146,6 @@ export default function IntervenantList() {
           filterBy={"status"}
           messageFilter={"Filtrer par statut"}
         />
-      ) : (
-        <div className={"w-full"}>
-          <h1 className={"text-3xl w-3/4 text-center mx-auto text-blue-500"}>
-            Aucun intervenant pour le moment
-          </h1>
-        </div>
-      )}
     </>
   );
 }

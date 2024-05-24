@@ -26,11 +26,16 @@ import UserApi from "@/services/Api/UserApi.js";
 import { Add } from "@/components/data-table/components/Add.jsx";
 import AddIntervenant from "@/components/CRUD/RegioCentreManager/Intervenant/AddIntervenant.jsx";
 import EditIntervenant from "@/components/CRUD/RegioCentreManager/Intervenant/EditIntervenant.jsx";
+import {SelectSpecifiqueRegion} from "@/components/SelectSpecifiqueRegion.jsx";
+import {SelectSpecifiqueTheme} from "@/components/SelectSpecifiqueTheme.jsx";
 
-export const IntervenantActions = ({ id }) => {
+export const IntervenantActions = ({ id , type}) => {
   // console.log(TrainerId)
   const [open, setOpen] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
+  const [affect, setAffect] = useState(false);
+
+  console.log(type)
   return (
     <>
       <DropdownMenu>
@@ -58,7 +63,7 @@ export const IntervenantActions = ({ id }) => {
           <DropdownMenuItem onClick={() => setOpen(true)}>
             Edit Module
           </DropdownMenuItem>
-          <DropdownMenuItem>Affect to trainer</DropdownMenuItem>
+          {type === 1 && <DropdownMenuItem onClick={()=>setAffect(true)}>designer a theme</DropdownMenuItem>}
         </DropdownMenuContent>
       </DropdownMenu>
 
@@ -134,6 +139,31 @@ export const IntervenantActions = ({ id }) => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+
+      {  <AlertDialog open={affect}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Are you absolutely sure to affect
+              <span className={"font-bold"}>
+                {" "}
+                {/*{firstname} {lastname}*/}
+              </span>{" "}
+              ?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+            <SelectSpecifiqueTheme id={id}/>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setAffect(false)}>
+              Cancel
+            </AlertDialogCancel>
+
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>}
     </>
   );
 };

@@ -18,8 +18,6 @@ import Dashboard from "@/pages/dashboard/index.jsx";
 
 import IntervenantList from "@/components/data-table/Tables/IntervenantsList.jsx";
 import CertificationsList from "../components/data-table/Tables/CertificationsList.jsx";
-
-import ActionsList from "@/components/data-table/Tables/Actions/Actions.jsx";
 import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute.jsx";
 import SettingsProfile from "@/pages/profile/index.jsx";
 // import AddIntervenant from "@/components/CRUD/RegioCentreManager/Intervenant/AddIntervenant.jsx";
@@ -28,6 +26,9 @@ import CompetencesList from "../components/data-table/Tables/CompetencesList.jsx
 
 import ThemeIntervenants from "../components/CRUD/RegioCentreManager/OffreFormation(Themes)/ThemeIntervenants.jsx";
 import ResetPasswordPage from "@/components/Auth/ResetPasswordPage.jsx";
+import UsersList from "@/components/data-table/Tables/UsersList.jsx";
+import {AdminRoute} from "@/components/ProtectedRoutes/AdminRoute.jsx";
+import ActionsList from "@/components/data-table/Tables/Actions.jsx";
 
 export const LOGIN_ROUTE = "/login";
 export const STUDENT_DASHBOARD_ROUTE = "/student/dashboard";
@@ -77,10 +78,19 @@ export const router = createBrowserRouter([
                     path: HOME_ROUTE,
                     element: <Dashboard/>
                 },
+                {
+                    path: 'users',
+                    element: <AdminRoute roles={['central']}>
+                        <UsersList/>
+                    </AdminRoute>
+
+                },
 
                 {
                     path: 'intervenants',
-                    element: <IntervenantList/>
+                    element:<AdminRoute roles={['central' ,'regional']}>
+                        <IntervenantList/>
+                    </AdminRoute>
                 },
                 {
                     path: "certifications",
@@ -112,49 +122,5 @@ export const router = createBrowserRouter([
     }
 
 
-
-    //     element: <StudentDashboardLayout/>,
-    //     children: [
-    //         {
-    //             path: STUDENT_DASHBOARD_ROUTE,
-    //             element: <StudentDashboard/>
-    //         },
-    //     ]
-    // },
-    // {
-    //     element: <AdminDashboardLayout/>,
-    //     children: [
-    //         {
-    //             path: ADMIN_DASHBOARD_ROUTE,
-    //             element: <AdminDashboard/>
-    //         },
-    //         {
-    //             path: ADMIN_MANAGE_STUDENTS_ROUTE,
-    //             element: <ManageStudents/>
-    //         },
-    //         {
-    //             path: ADMIN_MANAGE_PARENTS_ROUTE,
-    //             element: <ManageParents/>
-    //         },
-    //     ]
-    // },
-    // {
-    //     element: <ParentDashboardLayout/>,
-    //     children: [
-    //         {
-    //             path: PARENT_DASHBOARD_ROUTE,
-    //             element: <AdminDashboard/>
-    //         },
-    //     ]
-    // },
-    // {
-    //     element: <TeacherDashboardLayout/>,
-    //     children: [
-    //         {
-    //             path: TEACHER_DASHBOARD_ROUTE,
-    //             element: <TeacherDashboard/>
-    //         },
-    //     ]
-    // }
 
 ])

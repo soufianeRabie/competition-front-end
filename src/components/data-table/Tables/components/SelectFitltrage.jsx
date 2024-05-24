@@ -24,11 +24,10 @@ export const SelectFilterBy = ({filtrageItem = [] , setFiltredBy}) => {
         <>
             <Select onValueChange={(value)=>onRegionChange(value)}>
                 <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select a group" />
+                    <SelectValue placeholder="filter by " />
                 </SelectTrigger>
                 <SelectContent>
                     <SelectGroup>
-                        <SelectLabel>regions</SelectLabel>
                         {displayItem()}
                     </SelectGroup>
                 </SelectContent>

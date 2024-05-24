@@ -94,45 +94,50 @@ export default function UserLogin() {
        toast.dismiss(loading)
     }
 
-    return <>
+    return<>
+
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 p-4 bg-white rounded-lg shadow-md">
                 <FormField
                     control={form.control}
                     name="email"
-                    render={({field}) => (
+                    render={({ field }) => (
                         <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
-                                <Input placeholder="Email" {...field} />
+                                <Input placeholder="Email" {...field} className="input-field text-sm p-2" />
                             </FormControl>
-                            <FormMessage/>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
                 <FormField
                     control={form.control}
                     name="password"
-                    render={({field}) => (
+                    render={({ field }) => (
                         <FormItem>
                             <FormLabel>Password</FormLabel>
                             <FormControl>
-                                <Input type={'password'} placeholder="Password" {...field} />
+                                <Input type="password" placeholder="Password" {...field} className="input-field text-sm p-2" />
                             </FormControl>
-                            <FormMessage/>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
-                <Button className={'mt-2'} disabled={isSubmitting} type="submit">
-                    {isSubmitting && <Loader className={'mx-2 my-2 animate-spin'}/>} {' '} {isLogin ? <span> Login</span> : <span> Register</span>}
+                <Button className="mt-4 btn-primary w-full" disabled={isSubmitting} type="submit">
+                    {isSubmitting && <Loader className="mx-2 my-2 animate-spin" />} {isLogin ? 'Login' : 'Register'}
                 </Button>
             </form>
         </Form>
-     <div>
-         <span className={'text-blue-900 my-2 cursor-pointer'} onClick={()=>setIsLogin(prevState =>  !prevState)}> {lienText} </span>
-     </div>
-        <div onClick={()=>setIsOpen(true)}>forget password</div>
+        <div className="mt-4 text-center">
+    <span className="text-blue-900 cursor-pointer" onClick={() => setIsLogin(prevState => !prevState)}>
+        {lienText}
+    </span>
+        </div>
+        <div className="mt-2 text-center text-blue-900 cursor-pointer" onClick={() => setIsOpen(true)}>
+            Forgot password?
+        </div>
 
-        <ResetPassword isOpen={isOpen} setIsOpen={setIsOpen}/>
-    </>
+        <ResetPassword isOpen={isOpen} setIsOpen={setIsOpen} /></>
+
 }

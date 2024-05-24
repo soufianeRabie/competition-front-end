@@ -1,3 +1,4 @@
+import {ADD_ACTIONS, ADD_INTERVENANT, ADD_THEMES} from "@/library/index.jsx";
 
 export const initialState = {
   user: null,
@@ -25,11 +26,26 @@ const AppReducer = (state = initialState, action) => {
         themes: data?.themes,
         etablissements: data?.etablissements,
         entreprises: data?.entreprises,
-        intervennats: data?.intervennats,
+        intervennats: data?.intervenants,
         regions: data?.regions,
         actions:  data?.actions,
         users:  data?.users,
 
+      }
+
+    case ADD_THEMES:
+      return {...state ,
+        themes: [action?.payload?.theme , ...state.themes]
+      }
+
+    case ADD_INTERVENANT:
+      return {...state ,
+        intervennats: [action?.payload?.intervenant , ...state.intervennats]
+      }
+
+    case ADD_ACTIONS:
+      return {...state ,
+        actions: [action?.payload?.action , ...state.actions]
       }
 
 

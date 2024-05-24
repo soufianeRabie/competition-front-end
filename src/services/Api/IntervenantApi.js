@@ -19,8 +19,8 @@ const IntervenantApi = {
   getDomaines: async () => {
     return await axiosClient.get("/domaines");
   },
-  getPotentialIntervenants: async (data) => {
-    return await axiosClient.post("/themeIntervenants", data);
+  PotentialIntervenants: async (data) => {
+    return await axiosClient.post("/intervenant/affect", data);
   },
 };
 

@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { toast } from "sonner";
 import { useUserContext } from "@/context/UserContext.jsx";
 import UserApi from "@/services/Api/UserApi.js";
+import {ADD_ACTIONS} from "@/library/index.jsx";
 
 const schema = z.object({
     themes_id: z.string().nonempty(),
@@ -25,7 +26,6 @@ const schema = z.object({
     date_fin_real: z.string().nullable(),
     date_debut_real: z.string().nullable(),
     nbparticipants: z.string().nullable(),
-    status: z.string().nullable(),
 });
 
 const AddExercice = ({ setOpen }) => {
@@ -35,21 +35,11 @@ const AddExercice = ({ setOpen }) => {
     });
     const { register, formState: { errors } } = form;
 
-    const [entreprises, setEntreprises] = useState([]);
-    const [themes, setThemes] = useState([]);
     const [intervenants, setIntervenants] = useState([]);
-    const [etablissements, setEtablissements] = useState([]);
-    const { state } = useUserContext();
+    const { state :{  etablissements , intervennats , themes} , dispatch } = useUserContext();
 
     useEffect(() => {
-        async function fetchData() {
-            const response = await UserApi.getInit();
-            setEntreprises(response?.data?.entreprises);
-            setThemes(response?.data?.themes);
-            setIntervenants(response?.data?.intervenants);
-            setEtablissements(response?.data?.etablissements);
-        }
-        fetchData();
+       setIntervenants(intervennats)
     }, []);
 
     const onSubmit = async (data) => {
@@ -59,12 +49,14 @@ const AddExercice = ({ setOpen }) => {
             if (response.data && response?.status === 200) {
                 toast({
                     title: 'Success',
-                    description: (
-                        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-                            <code className='text-white'>Exercice added successfully</code>
-                        </pre>
-                    ),
+                    description : 'the action addded successfully'
                 });
+                dispatch({
+                    type : ADD_ACTIONS,
+                    payload :{
+                        action : response?.data
+                    }
+                })
             } else {
                 throw new Error('Something went wrong');
             }
@@ -247,19 +239,6 @@ const AddExercice = ({ setOpen }) => {
                             <FormLabel>Nombre de participants</FormLabel>
                             <FormControl>
                                 <Input type='number' placeholder='Nombre de participants' {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name='status'
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Status</FormLabel>
-                            <FormControl>
-                                <Input type='number' placeholder='Status' {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>

@@ -4,11 +4,10 @@ import { DataTableColumnHeader } from '../DataTableColumnHeader.jsx';
 import UserApi from "@/services/Api/UserApi.js";
 import { Button } from "@/components/ui/button.jsx";
 import { exportToExcel } from "@/components/ExportToExecl.js";
-// import { IntervenantActions } from "@/components/data-table/Tables/Actions/IntervenantAction.jsx";
 import AddAction from "@/components/CRUD/Action/AddAction.jsx";
 import { ClassAction } from "@/components/data-table/Tables/Actions/ClassAction.jsx";
-import {SelectFilterBy} from "@/components/data-table/Tables/components/SelectFitltrage.jsx";
-import {useUserContext} from "@/context/UserContext.jsx";
+import { SelectFilterBy } from "@/components/data-table/Tables/components/SelectFitltrage.jsx";
+import { useUserContext } from "@/context/UserContext.jsx";
 
 export default function ActionsList() {
   const [data, setData] = useState([]);
@@ -17,7 +16,6 @@ export default function ActionsList() {
   const [endDate, setEndDate] = useState('');
 
   const handleExport = () => {
-    // Filter data based on selected date range
     const filteredData = data.filter(item => {
       const createdAt = new Date(item.created_at);
       const start = new Date(startDate);
@@ -25,7 +23,6 @@ export default function ActionsList() {
       return createdAt >= start && createdAt <= end;
     });
 
-    // Map through the filtered data array and flatten each object
     const flattenedData = filteredData.map(item => ({
       id: item.id,
       exercice: item.exercice,
@@ -42,7 +39,6 @@ export default function ActionsList() {
       status: item.status,
       created_at: item.created_at,
       updated_at: item.updated_at,
-      // Flatten entreprise object
       entreprise_raison: item.entreprise.raison,
       entreprise_email: item.entreprise.email,
       entreprise_site: item.entreprise.site,
@@ -54,7 +50,6 @@ export default function ActionsList() {
       entreprise_telephone1: item.entreprise.telephone1,
       entreprise_telephone2: item.entreprise.telephone2,
       entreprise_telephone3: item.entreprise.telephone3,
-      // Flatten etablissement object
       etablissement_nom: item.etablissement.nom_efp,
       etablissement_adresse: item.etablissement.adresse,
       etablissement_tel: item.etablissement.tel,
@@ -62,12 +57,10 @@ export default function ActionsList() {
       etablissement_status: item.etablissement.status,
       etablissement_created_at: item.etablissement.created_at,
       etablissement_updated_at: item.etablissement.updated_at,
-      // Flatten intervenant object
       intervenant_nom: item.intervenant.nom,
       intervenant_matricule: item.intervenant.matricule,
       intervenant_created_at: item.intervenant.created_at,
       intervenant_updated_at: item.intervenant.updated_at,
-      // Flatten theme object
       theme_intitule: item.theme.intitule_theme,
       theme_duree_formation: item.theme.duree_formation,
       theme_status: item.theme.status,
@@ -75,13 +68,11 @@ export default function ActionsList() {
       theme_updated_at: item.theme.updated_at
     }));
 
-    // Pass the flattened data array and file name to the export function
     exportToExcel(flattenedData, 'actions_data');
   };
 
   const [filterBy, setFilterBy] = useState();
-  const {state} = useUserContext();
-
+  const { state } = useUserContext();
 
   const AdminActionsColumns = [
     {
@@ -117,14 +108,13 @@ export default function ActionsList() {
     {
       accessorKey: 'theme.intitule_theme',
       header: ({ column }) => {
-        return <DataTableColumnHeader column={column} title="intitule theme" />;
+        return <DataTableColumnHeader column={column} title="Intitulé Thème" />;
       },
     },
-
     {
       accessorKey: 'theme.domain.nom_domaine',
       header: ({ column }) => {
-        return <DataTableColumnHeader column={column} title="domain" />;
+        return <DataTableColumnHeader column={column} title="Domaine" />;
       },
     },
     {
@@ -151,11 +141,11 @@ export default function ActionsList() {
         return <DataTableColumnHeader column={column} title="Date Fin Real" />;
       },
     },
-   {
+    {
       id: 'actions',
       cell: ({ row }) => {
-        const {id ,status,date_debut_real } = row?.original;
-        return <ClassAction id={id } dateDebutReal={date_debut_real} status={status} />;
+        const { id, status, date_debut_real } = row?.original;
+        return <ClassAction id={id} dateDebutReal={date_debut_real} status={status} />;
       },
     },
   ];
@@ -163,58 +153,51 @@ export default function ActionsList() {
   useEffect(() => {
     let tempData = state?.actions;
 
-    if(state?.user.role_name === 'intervenant')
-    {
-      tempData = tempData?.filter((d)=>d.intervenants_id === state?.user?.intervenant?.id )
+    if (state?.user.role_name === 'intervenant') {
+      tempData = tempData?.filter((d) => d.intervenants_id === state?.user?.intervenant?.id);
     }
-    if(state?.user.role_name === 'entreprise')
-    {
-      console.log(tempData)
-      tempData = tempData?.filter((d)=>d.entreprises_id === state?.user?.entreprise?.id )
+    if (state?.user.role_name === 'entreprise') {
+      tempData = tempData?.filter((d) => d.entreprises_id === state?.user?.entreprise?.id);
     }
 
-    setData(tempData)
+    setData(tempData);
   }, [state]);
 
   return (
       <>
-        <div className="flex justify-between items-center mb-4">
-          <Button onClick={handleExport}>Export to Excel</Button>
+        <div className="flex justify-between items-center mb-6 p-4 bg-gray-50 rounded-md shadow-sm">
+          <Button onClick={handleExport} className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+            Export to Excel
+          </Button>
           <div className="flex gap-4">
-
             <input
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="border p-2"
+                className="border border-gray-300 p-2 rounded-md"
             />
             <input
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="border p-2"
+                className="border border-gray-300 p-2 rounded-md"
             />
           </div>
         </div>
-
-        <SelectFilterBy filtrageItem={['status' ,'theme_domain.nom_domaine' , 'theme_intitule_theme']} setFiltredBy={(value)=>setFilterBy(value)} />
-        {data?.length > 0 ? (
+        <div className="mb-4">
+          <SelectFilterBy filtrageItem={['status', 'theme_domain.nom_domaine', 'theme_intitule_theme']} setFiltredBy={(value) => setFilterBy(value)} />
+        </div>
             <DataTable
                 id="actions-table"
                 columns={AdminActionsColumns}
                 addAction={() => <AddAction />}
+                showAddCtion={state?.user === 'entreprise'}
                 data={data}
-                name={'Action'}
+                showHead={false}
+                name="Action"
                 filterBy={filterBy}
-                messageFilter={'Filtrer par theme.intitule_theme'}
+                messageFilter="Filtrer par theme.intitule_theme"
             />
-        ) : (
-            <div className="w-full">
-              <h1 className="text-3xl w-3/4 text-center mx-auto text-blue-500">
-                Aucun intervenant pour le moment
-              </h1>
-            </div>
-        )}
       </>
   );
 }

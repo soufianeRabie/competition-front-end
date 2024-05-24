@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
+import {SelectSpecifiqueRegion} from "@/components/SelectSpecifiqueRegion.jsx";
 
 const schema = z.object({
   theme_id: z.string().nonempty(),
@@ -41,6 +42,7 @@ const ThemeIntervenant = () => {
 
   const [themes, setThemes] = useState([]);
   const [intervenants, setIntervenants] = useState([]);
+
 
   useEffect(() => {
     const fetchThemes = async () => {
@@ -85,75 +87,78 @@ const ThemeIntervenant = () => {
 
 
   return (
-    <Form {...form}>
-      {JSON.stringify(errors)}
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className={"h-96 overflow-auto"}
-      >
-        <FormField
-          control={form.control}
-          name='theme_id'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Theme</FormLabel>
-              <Select
-                onValueChange={field.onChange}
-                defaultValue={field.value}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder='Select Theme' />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {themes.map((theme) => (
-                    <SelectItem
-                      key={theme.id.toString()}
-                      value={theme.id.toString()}
-                    >
-                      {theme.intitule_theme}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='intervenant_id'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Intervenant</FormLabel>
-              <Select
-                onValueChange={field.onChange}
-                defaultValue={field.value}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder='Select Intervenant' />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {intervenants.map((intervenant) => (
-                    <SelectItem
-                      key={intervenant.id.toString()}
-                      value={intervenant.id.toString()}
-                    >
-                      {intervenant.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type='submit'>Assign Intervenant to Theme</Button>
-      </form>
-    </Form>
+   <>
+     <Form {...form}>
+       {JSON.stringify(errors)}
+       <form
+           onSubmit={form.handleSubmit(onSubmit)}
+           className={"h-96 overflow-auto"}
+       >
+         <FormField
+             control={form.control}
+             name='theme_id'
+             render={({ field }) => (
+                 <FormItem>
+                   <FormLabel>Theme</FormLabel>
+                   <Select
+                       onValueChange={field.onChange}
+                       defaultValue={field.value}
+                   >
+                     <FormControl>
+                       <SelectTrigger>
+                         <SelectValue placeholder='Select Theme' />
+                       </SelectTrigger>
+                     </FormControl>
+                     <SelectContent>
+                       {themes.map((theme) => (
+                           <SelectItem
+                               key={theme.id.toString()}
+                               value={theme.id.toString()}
+                           >
+                             {theme.intitule_theme}
+                           </SelectItem>
+                       ))}
+                     </SelectContent>
+                   </Select>
+                   <FormMessage />
+                 </FormItem>
+             )}
+         />
+         <FormField
+             control={form.control}
+             name='intervenant_id'
+             render={({ field }) => (
+                 <FormItem>
+                   <FormLabel>Intervenant</FormLabel>
+                   <Select
+                       onValueChange={field.onChange}
+                       defaultValue={field.value}
+                   >
+                     <FormControl>
+                       <SelectTrigger>
+                         <SelectValue placeholder='Select Intervenant' />
+                       </SelectTrigger>
+                     </FormControl>
+                     <SelectContent>
+                       {intervenants.map((intervenant) => (
+                           <SelectItem
+                               key={intervenant.id.toString()}
+                               value={intervenant.id.toString()}
+                           >
+                             {intervenant.name}
+                           </SelectItem>
+                       ))}
+                     </SelectContent>
+                   </Select>
+                   <FormMessage />
+                 </FormItem>
+             )}
+         />
+         <Button onCick={()=>setIsOpen(true)} type='submit'>Assign Intervenant to Theme</Button>
+       </form>
+     </Form>
+
+   </>
   );
 };
 

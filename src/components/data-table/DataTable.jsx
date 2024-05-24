@@ -34,6 +34,7 @@ export function DataTable({
   messageFilter,
   addAction,
   actionName,
+  showAddCtion = true ,
   name,
   showHead = true,
 }) {
@@ -42,6 +43,8 @@ export function DataTable({
   const [columnVisibility, setColumnVisibility] = useState({});
   const [open, setOpen] = useState(false);
   const [rowSelection, setRowSelection] = useState({});
+
+  console.log('show action ' ,showAddCtion)
 
   const table = useReactTable({
     data,
@@ -67,14 +70,14 @@ export function DataTable({
     }, []);
   return (
     <>
-      <LayoutHeader>
+      {showHead &&   <LayoutHeader>
         {/*<TopNav links={topNav} />*/}
         <div className='ml-auto flex items-center space-x-4'>
           {/* eslint-disable-next-line react/jsx-no-undef */}
           <Search />
           <UserNav />
         </div>
-      </LayoutHeader>
+      </LayoutHeader> }
       <div className='flex items-center py-4'>
         <Input
           placeholder={messageFilter}
@@ -85,7 +88,7 @@ export function DataTable({
           className='max-w-sm'
         />
         <div className={"flex justify-end items-end w-full"}>
-          {addAction && (
+          {addAction  &&  showAddCtion &&(
             <Add
               open={open}
               setOpen={setOpen}

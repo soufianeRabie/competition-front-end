@@ -48,8 +48,8 @@ export const getProfileToUpdate = (role_name) => {
   switch (role_name) {
     case "entreprise":
       return <EntrepriseForm />;
-    // case 'intervenant':
-    //     return INTERVENANT_SIDE_LINKS;
+    case 'intervenant':
+        return <UserForm/>
     case "central":
       return <UserForm />;
     case "local":
@@ -60,3 +60,10 @@ export const getProfileToUpdate = (role_name) => {
       return null; // or any default value you want to return if role_name doesn't match any case
   }
 };
+
+
+
+
+export const ADD_THEMES = 'ADD_THEMES';
+export const ADD_INTERVENANT = 'ADD_INTERVENANT';
+export const ADD_ACTIONS = 'ADD_ACTIONS';

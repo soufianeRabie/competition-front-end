@@ -14,10 +14,12 @@ import { UserNav } from '@/components/user-nav'
 import { Layout, LayoutBody, LayoutHeader } from '@/components/custom/layout'
 import { RecentSales } from './components/recent-sales.jsx'
 import { Overview } from './components/overview.jsx'
-import {SelectSpecifiqueRegion} from "@/assets/SelectSpecifiqueRegion.jsx";
 import {Reports} from "@/pages/dashboard/components/Reports.jsx";
+import {useUserContext} from "@/context/UserContext.jsx";
 
 export default function Dashboard() {
+
+  const {state:{user}} = useUserContext();
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
@@ -179,9 +181,9 @@ export default function Dashboard() {
               </Card>
             </div>
           </TabsContent>
-          <TabsContent value={'reports'}  className='space-y-4'>
-           <Reports/>
-          </TabsContent>
+          {user?.role_name === 'central' || user?.role_name === 'regional' &&  <TabsContent value={'reports'}  className='space-y-4'>
+            <Reports/>
+          </TabsContent>}
         </Tabs>
       </LayoutBody>
     </Layout>
@@ -193,16 +195,6 @@ const topNav = [
     title: 'Overview',
     href: 'dashboard/overview',
     isActive: true,
-  },
-  {
-    title: 'Customers',
-    href: 'dashboard/customers',
-    isActive: false,
-  },
-  {
-    title: 'Products',
-    href: 'dashboard/products',
-    isActive: false,
   },
   {
     title: 'Settings',

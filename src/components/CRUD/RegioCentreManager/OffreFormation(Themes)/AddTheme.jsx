@@ -24,6 +24,7 @@ import {
 import { toast } from "sonner";
 import { useUserContext } from "@/context/UserContext.jsx";
 import IntervenantApi from "../../../../services/Api/IntervenantApi";
+import {ADD_THEMES} from "@/library/index.jsx";
 
 const schema = z.object({
   domaines_id: z.string().nonempty(),
@@ -43,7 +44,7 @@ const AddTheme = ({ setOpen }) => {
   } = form;
 
   const [domaines, setDomaines] = useState([]);
-  const { state } = useUserContext();
+  const { state  , dispatch} = useUserContext();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,6 +64,12 @@ const AddTheme = ({ setOpen }) => {
       const response = await ThemeApi.addTheme(data);
       if (response.data && response?.status === 201) {
         toast.success("Theme added successfully");
+          dispatch({
+              type : ADD_THEMES,
+              payload :{
+                  theme : response?.data
+              }
+          })
       } else {
         throw new Error("Something went wrong");
       }
@@ -71,6 +78,8 @@ const AddTheme = ({ setOpen }) => {
     }
 
     toast.dismiss(addThemeLoading);
+
+
   };
 
   return (

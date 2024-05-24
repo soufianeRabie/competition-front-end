@@ -12,8 +12,6 @@ export const SelectSpecifiqueRegion = ({setRegion}) => {
 
     const {state : {regions}} = useUserContext()
 
-
-
     const onRegionChange = (value)=>
     {
         setRegion(value)
@@ -28,7 +26,7 @@ export const SelectSpecifiqueRegion = ({setRegion}) => {
         <>
             <Select onValueChange={(value)=>onRegionChange(value)}>
                 <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select a group" />
+                    <SelectValue placeholder="Select a region" />
                 </SelectTrigger>
                 <SelectContent>
                     <SelectGroup>

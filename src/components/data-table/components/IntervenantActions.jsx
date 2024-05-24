@@ -103,8 +103,8 @@ export const TrainerActions = ({intId}) => {
                                     // }
                                 } catch (err) {
                                     toast.dismiss(deletingLoader)
-                                    toast.success('trainer not deleted', {
-                                        description: `trainer was not deleted try again after a while`,
+                                    toast.success('intervenant not deleted', {
+                                        description: `intervenant was not deleted try again after a while`,
                                         icon: <CircleX/>,
                                     })
                                 }

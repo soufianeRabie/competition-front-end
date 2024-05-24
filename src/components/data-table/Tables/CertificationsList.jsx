@@ -10,7 +10,7 @@ export default function CertificationsList() {
 
   const AdminCertificationColumns = [
     {
-      accessorKey: "intitule_certification",
+      accessorKey: "intiltule_certification",
       header: ({ column }) => {
         return (
           <DataTableColumnHeader
@@ -100,22 +100,14 @@ export default function CertificationsList() {
 
   return (
     <>
-      {data?.length > 0 ? (
         <DataTable
           columns={AdminCertificationColumns}
           data={data}
           name={"Certification"}
           addAction={(setOpen) => <AddCertification setOpen={setOpen} />}
-          filterBy={"id"}
-          messageFilter={"Filter by ID"}
+          filterBy={"intiltule_certification"}
+          messageFilter={"Filter by intitule certification"}
         />
-      ) : (
-        <div className={"w-full"}>
-          <h1 className={"text-3xl w-3/4 text-center mx-auto text-blue-500"}>
-            No certifications available at the moment
-          </h1>
-        </div>
-      )}
     </>
   );
 }

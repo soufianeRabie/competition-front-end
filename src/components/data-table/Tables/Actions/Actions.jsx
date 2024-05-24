@@ -4,7 +4,7 @@ import { DataTableColumnHeader } from "../../DataTableColumnHeader.jsx";
 import UserApi from "@/services/Api/UserApi.js";
 import { Button } from "@/components/ui/button.jsx";
 import { exportToExcel } from "@/components/ExportToExecl.js";
-import {SelectSpecifiqueRegion} from "@/assets/SelectSpecifiqueRegion.jsx";
+import {SelectSpecifiqueRegion} from "@/components/SelectSpecifiqueRegion.jsx";
 
 export default function ActionsList() {
   const [data, setData] = useState([]);
@@ -72,14 +72,9 @@ export default function ActionsList() {
     },
   ];
 
-  useEffect(() => {
-    async function fetchData() {
-      const response = await UserApi.getActions();
-      setData(response?.data);
-    }
-
-    fetchData();
-  }, []);
+ //  useEffect(() => {
+ // setData(s)
+ //  }, [state]);
 
   const onRegionChange = (value) => {};
   return (

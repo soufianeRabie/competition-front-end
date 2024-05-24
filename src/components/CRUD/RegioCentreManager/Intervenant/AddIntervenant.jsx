@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import UserApi from "@/services/Api/UserApi.js";
 import { useForm } from "react-hook-form";
-import { boolean, z } from "zod";
+import {  z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/custom/button";
 import {
@@ -23,6 +23,7 @@ import {
 import { Textarea } from "@/components/ui/textarea.jsx";
 import { toast } from "sonner";
 import { useUserContext } from "@/context/UserContext.jsx";
+import {ADD_INTERVENANT, ADD_THEMES} from "@/library/index.jsx";
 
 const schema = z.object({
   etablissements_id: z.string().nonempty(),
@@ -52,7 +53,7 @@ const AddIntervenant = ({ setOpen }) => {
 
   const [etablissements, setEtablissements] = useState([]);
   const [users, setUsers] = useState([]);
-  const { state } = useUserContext();
+  const { state  , dispatch} = useUserContext();
 
   useEffect(() => {
     setEtablissements(state?.etablissements)
@@ -68,14 +69,14 @@ const AddIntervenant = ({ setOpen }) => {
       if (response.data && response?.status === 201) {
         toast({
           title: "You submitted the following values:",
-          description: (
-            <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-              <code className='text-white'>
-                {"the profile updated successfully"}
-              </code>
-            </pre>
-          ),
+          description : 'the intervenants added successfully'
         });
+          dispatch({
+              type : ADD_INTERVENANT,
+              payload :{
+                  intervenant : response?.data
+              }
+          })
       } else {
         throw new Error("something went wrong");
       }

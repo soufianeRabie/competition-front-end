@@ -3,12 +3,14 @@ import { DataTable } from "../DataTable.jsx";
 import { DataTableColumnHeader } from "../DataTableColumnHeader.jsx";
 import ThemeApi from "@/services/Api/ThemeApi.js"; // Import ThemeApi instead of CertificationApi
 import AddTheme from "../../CRUD/RegioCentreManager/OffreFormation(Themes)/AddTheme.jsx"; // Import AddTheme instead of AddCertification
-import { ThemeActions } from "./Actions/ThemeAction.jsx"; // Import ThemeActions instead of CertificationActions
+import { ThemeActions } from "./Actions/ThemeAction.jsx";
+import {useUserContext} from "@/context/UserContext.jsx"; // Import ThemeActions instead of CertificationActions
 
 export default function ThemesList() {
   // Change component name to ThemesList
   const [data, setData] = useState([]);
 
+  const {state : {themes}} = useUserContext();
   const AdminThemeColumns = [
     {
       accessorKey: "intitule_theme", // Changed accessorKey to match theme data structure
@@ -86,37 +88,20 @@ export default function ThemesList() {
   ];
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await ThemeApi.getThemes(); // Fetch themes using ThemeApi
-        console.log("API Response:", response);
-        setData(response?.data);
-      } catch (error) {
-        console.error("Failed to fetch themes:", error);
-      }
-    }
-
-    fetchData();
-  }, []);
+    setData(themes)
+  }, [themes]);
 
   return (
     <>
-      {data?.length > 0 ? (
         <DataTable
           columns={AdminThemeColumns}
           data={data}
           name={"Theme"} // Set table name to "Theme"
           addAction={(setOpen) => <AddTheme setOpen={setOpen} />} // Use AddTheme instead of AddCertification
-          filterBy={"id"}
-          messageFilter={"Filter by ID"}
+          filterBy={"intitule_theme"}
+          messageFilter={"Filter by intitule theme"}
         />
-      ) : (
-        <div className={"w-full"}>
-          <h1 className={"text-3xl w-3/4 text-center mx-auto text-blue-500"}>
-            No themes available at the moment
-          </h1>
-        </div>
-      )}
+
     </>
   );
 }
